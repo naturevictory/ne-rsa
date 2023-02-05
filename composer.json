@@ -6,5 +6,11 @@
             "email": "nature6016@gmail.com"
         }
     ],
-    "require": {}
+    "require": {},
+    "autoload": {
+        "files": [
+            "ne-rsa/src/helpers.php"
+        ],
+        "psr-4": { "NERsa\\": "ne-rsa/src/" }
+    }
 }
