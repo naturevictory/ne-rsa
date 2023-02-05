@@ -9,7 +9,7 @@
     "require": {},
     "autoload": {
         "files": [
-            "ne-rsa/src/helpers.php"
+            "src/helpers.php"
         ],
         "psr-4": { "NERsa\\": "ne-rsa/src/" }
     }
