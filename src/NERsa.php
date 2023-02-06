@@ -3,8 +3,6 @@
 namespace NERsa;
 
 /**
- * @author williamylian
- *
  * Class UrlSafeRsa
  */
 class NERsa
