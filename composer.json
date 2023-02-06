@@ -11,6 +11,6 @@
         "files": [
             "src/helpers.php"
         ],
-        "psr-4": { "NERsa\\": "ne-rsa/src/" }
+        "psr-4": { "NERsa\\": "src/" }
     }
 }
