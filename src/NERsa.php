@@ -54,14 +54,14 @@ class NERsa
             $encrypted .= $encrypted_temp;
         }
 
-        return url_safe_base64_encode($encrypted);
+        return self::url_safe_base64_encode($encrypted);
     }
 
     public function privateDecrypt($encrypted)
     {
         $decrypted = "";
         $part_len = $this->key_len / 8;
-        $base64_decoded = url_safe_base64_decode($encrypted);
+        $base64_decoded = self::url_safe_base64_decode($encrypted);
         $parts = str_split($base64_decoded, $part_len);
 
         foreach ($parts as $part) {
@@ -84,14 +84,14 @@ class NERsa
             $encrypted .= $encrypted_temp;
         }
 
-        return url_safe_base64_encode($encrypted);
+        return self::url_safe_base64_encode($encrypted);
     }
 
     public function publicDecrypt($encrypted)
     {
         $decrypted = "";
         $part_len = $this->key_len / 8;
-        $base64_decoded = url_safe_base64_decode($encrypted);
+        $base64_decoded = self::url_safe_base64_decode($encrypted);
         $parts = str_split($base64_decoded, $part_len);
 
         foreach ($parts as $part) {
@@ -106,14 +106,36 @@ class NERsa
     {
         openssl_sign($data, $sign, $this->private_key, self::RSA_ALGORITHM_SIGN);
 
-        return url_safe_base64_encode($sign);
+        return self::url_safe_base64_encode($sign);
     }
 
     public function verify($data, $sign)
     {
         $pub_id = openssl_get_publickey($this->public_key);
-        $res = openssl_verify($data, url_safe_base64_decode($sign), $pub_id, self::RSA_ALGORITHM_SIGN);
+        $res = openssl_verify($data, self::url_safe_base64_decode($sign), $pub_id, self::RSA_ALGORITHM_SIGN);
 
         return $res;
     }
+
+
+    private  function url_safe_base64_encode ($data) {
+        return str_replace(array('+','/', '='),array('-','_', ''), base64_encode($data));
+    }
+
+    private  function url_safe_base64_decode ($data) {
+        $base_64 = str_replace(array('-','_'),array('+','/'), $data);
+        return base64_decode($base_64);
+    }
+
+    private  function base64_to_url_safe_base64 ($data) {
+        return str_replace(array('+', '/', '='),array('-', '_', ''), $data);
+    }
+
+    private   function url_safe_base64_to_base64 ($data) {
+        return str_replace(array('-','_'),array('+','/'), $data);
+    }
+
+
+
+
 }
